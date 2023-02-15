@@ -8,7 +8,7 @@ public class RebeccaChar : MonoBehaviour
 {
     //Movement
     [SerializeField] private float moveSpeed;
-    [SerializeField] private float force;
+    /*[SerializeField] private float force;*/
     [SerializeField] private float dragSpeed;
     public Transform orientation;
 
@@ -25,14 +25,14 @@ public class RebeccaChar : MonoBehaviour
     bool grounded;
 
     //Player Properties
-    [SerializeField] private float health;
+    [SerializeField] public float health;
     [SerializeField] private float maxHealth;
     [SerializeField] private float mana;
     [SerializeField] private float maxMana;
     [SerializeField] private Light mLight;
     [SerializeField] private GameObject MagicLight;
     [SerializeField] private SphereCollider magicLightCollider;
-    [SerializeField] private TMP_Text m_deathText;
+    [SerializeField] private Canvas m_deathText;
     private Vector3 magicLightOrigin;
     private float cooldownTimer=10f;
     private string keyCode;
@@ -54,7 +54,7 @@ public class RebeccaChar : MonoBehaviour
     private void Update()
     {
         //ground check
-        grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.2f, whatIsGround);
+        grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight* 0.5f+0.2f, whatIsGround);
 
         MyInput();
         SpeedControl();
@@ -139,8 +139,9 @@ public class RebeccaChar : MonoBehaviour
     private void MovePlayer()
     {
         moveDirection = orientation.forward * verticalInput + orientation.right * horizontalInput;
+        transform.position += moveDirection * moveSpeed;
 
-        rb.AddForce(moveDirection.normalized * moveSpeed * force, ForceMode.Force);
+        /*rb.AddForce(moveDirection.normalized * moveSpeed * force, ForceMode.Force);*/
     }
     private void SpeedControl()
     {
@@ -165,8 +166,8 @@ public class RebeccaChar : MonoBehaviour
         else if (cooldownTimer <= 0 && mana>=50)
         {
             mana -= 50;
-            mLight.range *= 500f;
-            mLight.intensity *= 10f;
+            mLight.range *= 100f;
+            mLight.intensity *= 100f;
             cooldownTimer = 10f;
             StartCoroutine(ReturnToNormal());
             
@@ -270,8 +271,8 @@ public class RebeccaChar : MonoBehaviour
         MagicLight.transform.position = magicLightOrigin;
         MagicLight.transform.localScale = new Vector3(3, 3, 3);
         magicLightCollider.radius = 0.5f;
-        mLight.range /= 500f;
-        mLight.intensity /= 10f;
+        mLight.range /= 100f;
+        mLight.intensity /= 100f;
     }
 
 }
