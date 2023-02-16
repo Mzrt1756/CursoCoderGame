@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UIElements;
 using TMPro;
 
-public class RebeccaChar : MonoBehaviour
+public class PlayerController : MonoBehaviour
 {
     //Movement
     [SerializeField] private float moveSpeed;

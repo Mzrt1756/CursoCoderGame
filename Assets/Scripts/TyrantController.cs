@@ -6,7 +6,7 @@ public class TyrantController : MonoBehaviour
 {
 
     [SerializeField] private Transform rebCharTransform;
-    [SerializeField] private RebeccaChar rebChar;
+    [SerializeField] private PlayerController rebChar;
     [SerializeField] private float speed;
     [SerializeField] private Vector3 initialRotation;
     [SerializeField] private float rotationSpeed;
