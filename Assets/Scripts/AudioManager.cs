@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class AudioManager : MonoBehaviour
 {
-    [SerializeField] private AudioSource sfxAudioSource, musicAudioSource;
+    [SerializeField] private AudioSource sfxAudioSource, musicAudioSource, sfxCloseGame;
 
 
     public static AudioManager Instance { get; private set; }
@@ -43,5 +43,10 @@ public class AudioManager : MonoBehaviour
     private void ToggleMusic()
     {
         musicAudioSource.mute = !musicAudioSource.mute;
+    }
+
+    public void PlaySoundClose(AudioClip clip)
+    {
+        sfxCloseGame.PlayOneShot(clip);
     }
 }

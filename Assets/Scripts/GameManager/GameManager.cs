@@ -5,8 +5,6 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    public static GameManager instance;
-
     /*private PlayerController _player;
     public bool IsPaused { get; private set; }
     public MainCanvas mainCanvas { get; private set; }
@@ -19,8 +17,18 @@ public class GameManager : MonoBehaviour
             return _player;
         }
     }*/
+    public static GameManager instance;
 
+    //Player
+    public PlayerController player;
+    public float _maxHealth = 200f;
+    public float _remainingHealth;
+    public float _maxMana = 200f;
+    public float _remainingMana;
 
+    //Scene Manager
+    private SceneManager _sceneManager;
+    
     private void Awake()
     {
         if (instance != null)
@@ -30,17 +38,30 @@ public class GameManager : MonoBehaviour
         else
         {
             instance = this;
+
+            DontDestroyOnLoad(this);
         }
     }
-    // Start is called before the first frame update
-    void Start()
+
+    private void Start()
     {
-        
+        _sceneManager = new SceneManager();
     }
 
-    // Update is called once per frame
-    void Update()
+    public void SavePlayerState(float remainingHealth, float remainingMana)
     {
-        
+        _remainingHealth = remainingHealth;
+        _remainingMana = remainingMana;
+    }
+
+    public void GetPlayerState()
+    {
+        _remainingHealth = 0;
+        _remainingMana = 0;
+    }
+
+    public void ObtainPlayerReference (PlayerController player)
+    {
+        this.player = player;
     }
 }

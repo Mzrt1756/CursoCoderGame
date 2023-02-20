@@ -12,8 +12,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float dragSpeed;
     public Transform orientation;
 
-    float horizontalInput;
-    float verticalInput;
+    private float horizontalInput;
+    private float verticalInput;
 
     Vector3 moveDirection;
 
@@ -25,17 +25,18 @@ public class PlayerController : MonoBehaviour
     bool grounded;
 
     //Player Properties
-    [SerializeField] public float health;
-    [SerializeField] private float maxHealth;
-    [SerializeField] private float mana;
-    [SerializeField] private float maxMana;
     [SerializeField] private Light mLight;
     [SerializeField] private GameObject MagicLight;
     [SerializeField] private SphereCollider magicLightCollider;
     [SerializeField] private Canvas m_deathText;
+    private float health = 200f;
+    private float mana = 200f;
+    //[SerializeField] public float GameManager.instance._maxHealth = 200f;
+    //[SerializeField] public float GameManager.instance._maxMana = 200f;
     private Vector3 magicLightOrigin;
     private float cooldownTimer=10f;
     private string keyCode;
+    
 
     //Raycast
     [SerializeField] private Transform m_eyeView;
@@ -44,6 +45,11 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float m_explosionForce = 2000f;
     [SerializeField] private float m_explosionRadius = 6f;
 
+    private void Awake()
+    {
+        GameManager.instance.ObtainPlayerReference(this);
+        GameManager.instance.SavePlayerState(health, mana);
+    }
     private void Start()
     {
         magicLightOrigin = new Vector3(3.65f,8.34f,11.13f);
@@ -53,22 +59,24 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
+        health = GameManager.instance._remainingHealth;
+        mana = GameManager.instance._remainingMana;
+        GameManager.instance.SavePlayerState(health, mana);
         //ground check
         grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight* 0.5f+0.2f, whatIsGround);
 
         MyInput();
-        SpeedControl();
+        /*SpeedControl();*/
 
         //handle drag
-        if (grounded)
+        /*if (grounded)
         {
             rb.drag = dragSpeed;
         }
         else
         {
             rb.drag = 0;
-        }
-
+        }*/
         if (cooldownTimer > 0)
         {
             cooldownTimer -= Time.deltaTime;
@@ -135,7 +143,6 @@ public class PlayerController : MonoBehaviour
         verticalInput = Input.GetAxisRaw("Vertical");
 
     }
-
     private void MovePlayer()
     {
         moveDirection = orientation.forward * verticalInput + orientation.right * horizontalInput;
@@ -143,7 +150,7 @@ public class PlayerController : MonoBehaviour
 
         /*rb.AddForce(moveDirection.normalized * moveSpeed * force, ForceMode.Force);*/
     }
-    private void SpeedControl()
+    /*private void SpeedControl()
     {
         Vector3 flatVel = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
         if(flatVel.magnitude>moveSpeed)
@@ -155,75 +162,65 @@ public class PlayerController : MonoBehaviour
             rb.velocity = Vector3.zero;
 
         }
-    }
-
+    }*/
     public void LightZone()
     {
-        if (mana <= 50)
+        if (GameManager.instance._remainingMana <= 50)
         {
             Debug.Log("Your mana isn't enough.");
         }
-        else if (cooldownTimer <= 0 && mana>=50)
+        else if (cooldownTimer <= 0 && GameManager.instance._remainingMana >= 50)
         {
-            mana -= 50;
+            GameManager.instance._remainingMana -= 50;
             mLight.range *= 100f;
             mLight.intensity *= 100f;
             cooldownTimer = 10f;
             StartCoroutine(ReturnToNormal());
             
         }
-        
-
     }
-
     public void Cure()
     {
-        if (mana <= 50)
+        if (GameManager.instance._remainingMana <= 50)
         {
             Debug.Log("Your mana isn't enough.");
             cooldownTimer = 10f;
         }
-        else if (health >= maxHealth)
+        else if (GameManager.instance._remainingHealth>= GameManager.instance._maxHealth)
         {
             Debug.Log("Your health is at maximum.");
-            health = maxHealth;
+            GameManager.instance._remainingHealth = GameManager.instance._maxHealth;
         }
-        else if (cooldownTimer <= 0 && mana>=50 && health<=maxHealth)
+        else if (cooldownTimer <= 0 && GameManager.instance._remainingMana>= 50 && GameManager.instance._remainingHealth <= GameManager.instance._maxHealth)
         {
             MagicLight.transform.position = new Vector3(0, 0, 0);
             MagicLight.transform.localScale = new Vector3(30, 30, 30);
             magicLightCollider.radius *= 50f;
-            mana -= 50;
-            health = maxHealth;
+            GameManager.instance._remainingMana -= 50;
+            GameManager.instance._remainingHealth = GameManager.instance._maxHealth;
             cooldownTimer = 10f;
             StartCoroutine(ReturnToNormal());
         }
-        
-        
-        
     }
-
     private void RestoreMana()
     {
-        if (mana == maxMana)
+        
+        if (GameManager.instance._remainingMana == GameManager.instance._maxMana)
         {
             Debug.Log("Your mana is full.");
         }
-        else if (cooldownTimer <= 0 && mana!=maxMana)
+        else if (cooldownTimer <= 0 && GameManager.instance._remainingMana != GameManager.instance._maxMana)
         {
-            mana = maxMana;
+            GameManager.instance._remainingMana = GameManager.instance._maxMana;
             cooldownTimer = 10f;
         }
         
     }
-
     public void CheckHealth()
     {
-
-        
-        if (health <= 0 )
+        if (GameManager.instance._remainingHealth <= 0 )
         {
-            health = 0;
+            GameManager.instance._remainingHealth = 0;
             if (gameObject)
             {
                 m_deathText.gameObject.SetActive(true);
@@ -233,18 +230,17 @@ public class PlayerController : MonoBehaviour
 
             }
         }
-       
         else 
-        {
+        {            
             m_deathText.gameObject.SetActive(false);
         }
     }
-
     public void CheckMana()
     {
-        if (mana <= 0)
+        if (GameManager.instance._remainingMana <= 0)
         {
-            mana = 0;
+
+            GameManager.instance._remainingMana = 0;
         }
     }
     private void CreateRaycast()
@@ -264,7 +260,6 @@ public class PlayerController : MonoBehaviour
             Debug.Log("Hasn´t collided with anything");
         }
     }
-
     public IEnumerator ReturnToNormal()
     {
         yield return new WaitForSeconds(5f);

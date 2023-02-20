@@ -6,27 +6,31 @@ public class TyrantController : MonoBehaviour
 {
 
     [SerializeField] private Transform rebCharTransform;
-    [SerializeField] private PlayerController rebChar;
     [SerializeField] private float speed;
     [SerializeField] private Vector3 initialRotation;
     [SerializeField] private float rotationSpeed;
     [SerializeField] private float scaleFactor;
     private Vector3 originalPosition;
-    private float damage = 50f;
+    private float damage = 2f;
+    private float cooldownTimer = 0.5f;
 
     // Start is called before the first frame update
     void Start()
     {
+        
         originalPosition = transform.position;
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (cooldownTimer > 0)
+        {
+            cooldownTimer -= Time.deltaTime;
+
+        }
         ExecutePursuit();
     }
-
-
     private void ExecutePursuit()
     {
         var vectorToChar = rebCharTransform.position - transform.position;
@@ -41,21 +45,18 @@ public class TyrantController : MonoBehaviour
             DamagePlayer(damage);
         }
     }
-
     private void LookAtPlayer()
     {
         var vectorToChar = rebCharTransform.position - transform.position;
         vectorToChar.y = 0;
         Quaternion rotation = Quaternion.LookRotation(vectorToChar);
         transform.rotation = Quaternion.Lerp(transform.rotation, rotation, rotationSpeed * Time.deltaTime);
-
     }
-
     private void DamagePlayer(float damageReceived)
     {
-        if(rebChar.health > 0)
+        if(cooldownTimer <= 0 && GameManager.instance._remainingHealth> 0)
         {
-            rebChar.health -= damageReceived;
+            GameManager.instance._remainingHealth -= damageReceived;
         }
         
     }

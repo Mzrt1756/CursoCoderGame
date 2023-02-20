@@ -24,4 +24,6 @@ public class StartScreen : MonoBehaviour
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
         AudioManager.Instance.PlaySound(startSound);
     }
+
+
 }
