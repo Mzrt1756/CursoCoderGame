@@ -19,10 +19,7 @@ public class Inventory : MonoBehaviour
         
 
         inventoryDisplay.text = "";
-        foreach(var item in myInventory)
-        {
-            inventoryDisplay.text += "Item: " + item.Key + " Quantity: " + item.Value + "\n"; 
-        }
+        
     }
 
     // Update is called once per frame
@@ -34,17 +31,28 @@ public class Inventory : MonoBehaviour
 
     private void UseKnife()
     {
-        if(Input.GetKeyDown(KeyCode.K))
-        {
-            myInventory.Remove("Knife");
-            Debug.Log("You used your knife.");
-        }
+        
+            if (Input.GetKeyDown(KeyCode.K))
+            {
+            if (myInventory.ContainsKey("Knife"))
+            {
+                myInventory.Remove("Knife");
+                Debug.Log("You used your knife.");
+            }
+            else
+            {
+                Debug.Log("You don´t have a knife.");
+            }
+            }
+        
     }
 
     private void refreshInventory()
     {
+        inventoryDisplay.text = "";
         foreach (var item in myInventory)
         {
+            
             inventoryDisplay.text += "Item: " + item.Key + " Quantity: " + item.Value + "\n";
         }
     }
