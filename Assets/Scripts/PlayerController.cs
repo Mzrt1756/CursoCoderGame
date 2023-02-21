@@ -45,13 +45,10 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float m_explosionForce = 2000f;
     [SerializeField] private float m_explosionRadius = 6f;
 
-    private void Awake()
+    private void Start()
     {
         GameManager.instance.ObtainPlayerReference(this);
         GameManager.instance.SavePlayerState(health, mana);
-    }
-    private void Start()
-    {
         magicLightOrigin = new Vector3(3.65f,8.34f,11.13f);
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
