@@ -37,13 +37,16 @@ public class PlayerController : MonoBehaviour
     private float cooldownTimer=10f;
     private string keyCode;
     
-
     //Raycast
     [SerializeField] private Transform m_eyeView;
     [SerializeField] private float m_raycastDistance;
     [SerializeField] private LayerMask m_layerToCollideWith;
     [SerializeField] private float m_explosionForce = 2000f;
     [SerializeField] private float m_explosionRadius = 6f;
+
+    //Canvas
+    [SerializeField] private Canvas inventory;
+
 
     private void Start()
     {
@@ -124,8 +127,10 @@ public class PlayerController : MonoBehaviour
             case "r":
                 CreateRaycast();
                 break;
-            default:
-                
+            case "i":
+                ShowCanvas();
+                break;
+            default:              
                 break;
         }
         
@@ -267,4 +272,20 @@ public class PlayerController : MonoBehaviour
         mLight.intensity /= 100f;
     }
 
+    public void ShowCanvas()
+    {
+       
+        if (Input.GetKeyDown(KeyCode.I))
+        {
+            if (inventory.isActiveAndEnabled)
+            {
+                inventory.gameObject.SetActive(false);
+            }
+            else
+            {
+                inventory.gameObject.SetActive(true);
+            }
+          
+        }
+    }
 }

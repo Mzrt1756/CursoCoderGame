@@ -16,6 +16,11 @@ public class RobbieSpawner : MonoBehaviour
         {
             SpawnRobbie(i);
         }
+
+        /*foreach(var l_robbieController in m_robbiePrefabs)
+        {
+            SpawnRobbie(l_robbieController);
+        }*/
     }
     // Start is called before the first frame update
     void Start()
