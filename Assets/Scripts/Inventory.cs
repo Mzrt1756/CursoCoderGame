@@ -49,11 +49,35 @@ public class Inventory : MonoBehaviour
 
     private void refreshInventory()
     {
+        
         inventoryDisplay.text = "";
-        foreach (var item in myInventory)
+
+        if (myInventory.Count <=0)
         {
-            
-            inventoryDisplay.text += "Item: " + item.Key + " Quantity: " + item.Value + "\n";
+            inventoryDisplay.text = "The inventory is empty";
         }
+        else
+        {
+            foreach (var item in myInventory)
+            {
+
+                inventoryDisplay.text += "Item: " + item.Key + " Quantity: " + item.Value + "\n";
+            }
+        }
+        
+    }
+
+    private void AddKnife()
+    {
+        if (myInventory.ContainsKey("Knife"))
+        {
+            myInventory["Knife"]++;
+        }
+        else
+        {
+            myInventory.Add("Sword",1);
+        }
+        refreshInventory();
+
     }
 }
