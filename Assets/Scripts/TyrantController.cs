@@ -11,7 +11,7 @@ public class TyrantController : MonoBehaviour
     [SerializeField] private float rotationSpeed;
     [SerializeField] private float scaleFactor;
     private Vector3 originalPosition;
-    private float damage = 2f;
+    private int damage = 2;
     private float cooldownTimer = 0.5f;
 
     // Start is called before the first frame update
@@ -52,7 +52,7 @@ public class TyrantController : MonoBehaviour
         Quaternion rotation = Quaternion.LookRotation(vectorToChar);
         transform.rotation = Quaternion.Lerp(transform.rotation, rotation, rotationSpeed * Time.deltaTime);
     }
-    private void DamagePlayer(float damageReceived)
+    private void DamagePlayer(int damageReceived)
     {
         if(cooldownTimer <= 0 && GameManager.instance._remainingHealth> 0)
         {

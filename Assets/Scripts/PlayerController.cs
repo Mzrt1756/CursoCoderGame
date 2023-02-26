@@ -29,8 +29,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private GameObject MagicLight;
     [SerializeField] private SphereCollider magicLightCollider;
     [SerializeField] private Canvas m_deathText;
-    private float health = 200f;
-    private float mana = 200f;
+    private int health = 200;
+    private int mana = 200;
     //[SerializeField] public float GameManager.instance._maxHealth = 200f;
     //[SerializeField] public float GameManager.instance._maxMana = 200f;
     private Vector3 magicLightOrigin;
@@ -46,7 +46,6 @@ public class PlayerController : MonoBehaviour
 
     //Canvas
     [SerializeField] private Canvas inventory;
-
 
     private void Start()
     {

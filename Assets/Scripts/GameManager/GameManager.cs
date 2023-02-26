@@ -21,10 +21,10 @@ public class GameManager : MonoBehaviour
 
     //Player
     public PlayerController player;
-    public float _maxHealth = 200f;
-    public float _remainingHealth;
-    public float _maxMana = 200f;
-    public float _remainingMana;
+    public int _maxHealth = 200;
+    public int _remainingHealth;
+    public int _maxMana = 200;
+    public int _remainingMana;
 
     //Scene Manager
     private SceneManager _sceneManager;
@@ -48,7 +48,7 @@ public class GameManager : MonoBehaviour
         _sceneManager = new SceneManager();
     }
 
-    public void SavePlayerState(float remainingHealth, float remainingMana)
+    public void SavePlayerState(int remainingHealth, int remainingMana)
     {
         _remainingHealth = remainingHealth;
         _remainingMana = remainingMana;
