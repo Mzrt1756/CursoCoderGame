@@ -2,11 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RobbieTDAController : MonoBehaviour
+public class RobbieTDAController : Enemy
 {
-    [SerializeField] private float m_speed = 4f;
+
+    [SerializeField] private RobbieData robbieData;
+
     //[SerializeField] private int m_startingWaypoint;
-    [SerializeField] private float m_distanceThreshold; 
     [SerializeField] private Transform[] m_waypoints;
     //[SerializeField] private List<Transform> m_listWaypoints;
 
@@ -49,7 +50,7 @@ public class RobbieTDAController : MonoBehaviour
 
     private void Move(Vector3 p_direction)
     {
-        transform.position += p_direction * m_speed * Time.deltaTime;
+        transform.position += p_direction * robbieData.speed * Time.deltaTime;
     }
     private void Patrol()
     {
@@ -58,7 +59,7 @@ public class RobbieTDAController : MonoBehaviour
         var l_direction = l_currDifference.normalized;
         Move(l_direction);
         var l_currDistance = l_currDifference.magnitude;
-        if(l_currDistance <= m_distanceThreshold)
+        if(l_currDistance <= robbieData.distanceThreshold)
         {
             NextWaypoint();
         }

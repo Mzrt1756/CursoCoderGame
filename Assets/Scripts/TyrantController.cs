@@ -2,17 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TyrantController : MonoBehaviour
+public class TyrantController : Enemy
 {
 
+    [SerializeField] private TyrantData tyrantData;
+
     [SerializeField] private Transform rebCharTransform;
-    [SerializeField] private float speed;
     [SerializeField] private Vector3 initialRotation;
-    [SerializeField] private float rotationSpeed;
-    [SerializeField] private float scaleFactor;
     private Vector3 originalPosition;
-    private int damage = 2;
-    private float cooldownTimer = 0.5f;
 
     // Start is called before the first frame update
     void Start()
@@ -24,9 +21,9 @@ public class TyrantController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (cooldownTimer > 0)
+        if (tyrantData.cooldownTimer > 0)
         {
-            cooldownTimer -= Time.deltaTime;
+            tyrantData.cooldownTimer -= Time.deltaTime;
 
         }
         ExecutePursuit();
@@ -36,13 +33,13 @@ public class TyrantController : MonoBehaviour
         var vectorToChar = rebCharTransform.position - transform.position;
         var distance = vectorToChar.magnitude;
         LookAtPlayer();
-        if (distance >= scaleFactor)
+        if (distance >= tyrantData.scaleFactor)
         {
-            transform.position += transform.forward * speed * Time.deltaTime;
+            transform.position += transform.forward * tyrantData.speed * Time.deltaTime;
         }
         else
         {
-            DamagePlayer(damage);
+            DamagePlayer(tyrantData.damage);
         }
     }
     private void LookAtPlayer()
@@ -50,11 +47,11 @@ public class TyrantController : MonoBehaviour
         var vectorToChar = rebCharTransform.position - transform.position;
         vectorToChar.y = 0;
         Quaternion rotation = Quaternion.LookRotation(vectorToChar);
-        transform.rotation = Quaternion.Lerp(transform.rotation, rotation, rotationSpeed * Time.deltaTime);
+        transform.rotation = Quaternion.Lerp(transform.rotation, rotation, tyrantData.rotationSpeed * Time.deltaTime);
     }
     private void DamagePlayer(int damageReceived)
     {
-        if(cooldownTimer <= 0 && GameManager.instance._remainingHealth> 0)
+        if(tyrantData.cooldownTimer <= 0 && GameManager.instance._remainingHealth> 0)
         {
             GameManager.instance._remainingHealth -= damageReceived;
         }

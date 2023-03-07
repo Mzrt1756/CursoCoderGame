@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 public class HealthAndManaBar : MonoBehaviour
 {
+    [SerializeField] private MainCharacterData rebeccaData;
     [SerializeField] private Slider healthSlider;
     [SerializeField] private Slider manaSlider;
     // Start is called before the first frame update
@@ -23,13 +24,13 @@ public class HealthAndManaBar : MonoBehaviour
     }
     public void SetMaxHealth()
     {
-        healthSlider.maxValue = GameManager.instance._maxHealth;
-        healthSlider.value = GameManager.instance._maxHealth;
+        healthSlider.maxValue = rebeccaData._maxHealth;
+        healthSlider.value = rebeccaData._maxHealth;
     }
     public void SetMaxMana()
     {
-        manaSlider.maxValue = GameManager.instance._maxMana;
-        manaSlider.value = GameManager.instance._maxMana;
+        manaSlider.maxValue = rebeccaData._maxMana;
+        manaSlider.value = rebeccaData._maxMana;
     }
     public void SetHealth()
     {

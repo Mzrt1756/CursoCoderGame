@@ -68,8 +68,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 72156c36754902d498dc246609c2c6d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_speed: 10
-  m_distanceThreshold: 2
+  characterData: {fileID: 11400000, guid: e6998bed2b41656448197d5c7d9222f3, type: 2}
+  robbieData: {fileID: 11400000, guid: 3ad460a917dc13a4da617ae52e5557bd, type: 2}
   m_waypoints: []
 --- !u!108 &-4215227971008049077
 Light:

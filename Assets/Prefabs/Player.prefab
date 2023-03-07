@@ -212,14 +212,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a4e8f11004239c9428b772c00f086152, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 30
-  force: 5
-  dragSpeed: 0
+  characterData: {fileID: 11400000, guid: a257856f3577c4b46ba2fd1d7af74eef, type: 2}
+  mainCharacterData: {fileID: 11400000, guid: 3e03b21d3f9d33a4891277b7e33e111e, type: 2}
   orientation: {fileID: 184353871466849884}
-  playerHeight: 2
-  whatIsGround:
-    serializedVersion: 2
-    m_Bits: 128
+  m_deathText: {fileID: 0}
+  m_eyeView: {fileID: 0}
+  inventory: {fileID: 6840999656233567708, guid: 915f27d1c8ad14d459f996f38e21ae9b,
+    type: 3}
 --- !u!1 &184353871708885597
 GameObject:
   m_ObjectHideFlags: 0

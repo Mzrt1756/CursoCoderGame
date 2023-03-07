@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd988b9e2d66f34409b5429cb02884a5, type: 3}
+  m_Name: MainCharacterData
+  m_EditorClassIdentifier: 
+  _maxHealth: 200
+  _maxMana: 200
+  moveSpeed: 0.2
+  moveRunSpeed: 0.5
+  dragSpeed: 0
+  playerHeight: 2
+  whatIsGround:
+    serializedVersion: 2
+    m_Bits: 128
+  m_raycastDistance: 50
+  m_explosionForce: 2000
+  m_explosionRadius: 6
+  m_layerToCollideWith:
+    serializedVersion: 2
+    m_Bits: 1
+  mLight: {fileID: 165998420557305987, guid: 3898a0411bfe5b84ba63f22617ba4887, type: 3}
+  MagicLight: {fileID: 7670852952050032956, guid: 0e0e0de8f4d4d0a48ac99444cbc2112e,
+    type: 3}
+  magicLightCollider: {fileID: 7670852952050032899, guid: 0e0e0de8f4d4d0a48ac99444cbc2112e,
+    type: 3}
+  cooldownTimer: 5.417291

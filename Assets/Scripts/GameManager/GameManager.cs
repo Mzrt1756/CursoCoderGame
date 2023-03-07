@@ -5,6 +5,9 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
+
+    [SerializeField] private MainCharacterData rebeccaData;
+
     /*private PlayerController _player;
     public bool IsPaused { get; private set; }
     public MainCanvas mainCanvas { get; private set; }
@@ -21,9 +24,9 @@ public class GameManager : MonoBehaviour
 
     //Player
     public PlayerController player;
-    public int _maxHealth = 200;
+    //public int _maxHealth = 200;
     public int _remainingHealth;
-    public int _maxMana = 200;
+    //public int _maxMana = 200;
     public int _remainingMana;
 
     //Scene Manager
