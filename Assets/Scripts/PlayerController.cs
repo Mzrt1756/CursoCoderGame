@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -20,7 +21,7 @@ public class PlayerController : PlayableCharacter
     bool grounded;
 
     //Player Properties
-    [SerializeField] private Canvas m_deathText;
+    /*[SerializeField] private Canvas m_deathText;*/
     private int health = 200;
     private int mana = 200;
     private Vector3 magicLightOrigin;
@@ -32,6 +33,9 @@ public class PlayerController : PlayableCharacter
 
     //Canvas
     [SerializeField] private Canvas inventory;
+
+    //Events
+    public event Action onPlayerDeath;
 
     private void Start()
     {
@@ -181,19 +185,22 @@ public class PlayerController : PlayableCharacter
         if (GameManager.instance._remainingHealth <= 0 )
         {
             GameManager.instance._remainingHealth = 0;
+            onPlayerDeath?.Invoke();
+
             if (gameObject)
             {
-                m_deathText.gameObject.SetActive(true);
+                /*m_deathText.gameObject.SetActive(true);*/
                 mainCharacterData.moveSpeed = 0;
                 mainCharacterData.mLight.intensity = 0;
+                
                 /*Destroy(MagicLight);*/
 
             }
         }
-        else 
+        /*else 
         {
             m_deathText.gameObject.SetActive(false);
-        }
+        }*/
     }
     
     private void CreateRaycast()
@@ -240,3 +247,34 @@ public class PlayerController : PlayableCharacter
     }
 }
 
+/*public class PlayerHealthController : MonoBehaviour
+{
+    public float m_currentHealth;
+    public float m_maxHealth;
+
+    public event Action<float> OnHealthChange;
+
+    public PlayerHealthController(float p_maxHealth)
+    {
+        m_maxHealth = p_maxHealth;
+        m_currentHealth = p_maxHealth;
+    }
+
+    public float GetCurrentHealth()
+    {
+        return m_currentHealth;
+    }
+
+    public void ReceiveDamage(float p_currentDamage)
+    {
+        m_currentHealth -= p_currentDamage;
+        OnHealthChange?.Invoke(m_currentHealth);
+    }
+
+    public void HealDamage(float p_currentHeal)
+    {
+        m_currentHealth += p_currentHeal;
+        OnHealthChange?.Invoke(m_currentHealth);
+
+    }
+}*/

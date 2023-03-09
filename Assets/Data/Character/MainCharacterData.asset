@@ -32,4 +32,4 @@ MonoBehaviour:
     type: 3}
   magicLightCollider: {fileID: 7670852952050032899, guid: 0e0e0de8f4d4d0a48ac99444cbc2112e,
     type: 3}
-  cooldownTimer: 5.417291
+  cooldownTimer: -0.0014051963
