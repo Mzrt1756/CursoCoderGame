@@ -1,9 +1,6 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UIElements;
-using TMPro;
 
 public class PlayerController : PlayableCharacter
 {
@@ -29,13 +26,14 @@ public class PlayerController : PlayableCharacter
 
     
     //Raycast
-    [SerializeField] private Transform m_eyeView;
+    //[SerializeField] public Transform m_eyeView;
 
-    //Canvas
-    [SerializeField] private Canvas inventory;
 
     //Events
-    public event Action onPlayerDeath;
+    public static event Action OnPlayerDeath;
+    public static event Action OnInventoryActive;
+    public static event Action OnRaycastActive;
+    public static event Action OnPauseActive;
 
     private void Start()
     {
@@ -49,7 +47,6 @@ public class PlayerController : PlayableCharacter
 
     private void Update()
     {
-
         health = GameManager.instance._remainingHealth;
         mana = GameManager.instance._remainingMana;
         GameManager.instance.SavePlayerState(health, mana);
@@ -85,10 +82,22 @@ public class PlayerController : PlayableCharacter
                 RestoreMana();
                 break;
             case "r":
-                CreateRaycast();
+                if (OnRaycastActive != null)
+                {
+                    OnRaycastActive?.Invoke();
+                }
                 break;
             case "i":
-                ShowCanvas();
+                if (OnInventoryActive != null)
+                {
+                    OnInventoryActive?.Invoke();
+                };
+                break;
+            case "p":
+                if (OnPauseActive != null)
+                {
+                    OnPauseActive?.Invoke();
+                };
                 break;
             default:              
                 break;
@@ -185,25 +194,18 @@ public class PlayerController : PlayableCharacter
         if (GameManager.instance._remainingHealth <= 0 )
         {
             GameManager.instance._remainingHealth = 0;
-            onPlayerDeath?.Invoke();
-
             if (gameObject)
             {
-                /*m_deathText.gameObject.SetActive(true);*/
-                mainCharacterData.moveSpeed = 0;
-                mainCharacterData.mLight.intensity = 0;
-                
-                /*Destroy(MagicLight);*/
-
+                currentSpeed = 0;
+                if (OnPlayerDeath != null)
+                {
+                    OnPlayerDeath?.Invoke();
+                }
             }
         }
-        /*else 
-        {
-            m_deathText.gameObject.SetActive(false);
-        }*/
     }
     
-    private void CreateRaycast()
+    /*private void CreateRaycast()
     {
         var l_hasCollided = Physics.Raycast(m_eyeView.position, m_eyeView.forward, out RaycastHit p_raycastHitInfo, mainCharacterData.m_raycastDistance, mainCharacterData.m_layerToCollideWith);
         if (l_hasCollided)
@@ -219,7 +221,7 @@ public class PlayerController : PlayableCharacter
         {
             Debug.Log("Hasn´t collided with anything");
         }
-    }
+    }*/
     public IEnumerator ReturnToNormal()
     {
         yield return new WaitForSeconds(5f);
@@ -229,22 +231,7 @@ public class PlayerController : PlayableCharacter
         mainCharacterData.mLight.range /= 100f;
         mainCharacterData.mLight.intensity /= 100f;
     }
-    public void ShowCanvas()
-    {
-       
-        if (Input.GetKeyDown(KeyCode.I))
-        {
-            if (inventory.isActiveAndEnabled)
-            {
-                inventory.gameObject.SetActive(false);
-            }
-            else
-            {
-                inventory.gameObject.SetActive(true);
-            }
-          
-        }
-    }
+    
 }
 
 /*public class PlayerHealthController : MonoBehaviour

@@ -1,24 +1,25 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class GameOverDisplay : MonoBehaviour
 {
-    private PlayerController playerController;
-    GameObject gameOverCanvas;
+    [SerializeField] private GameObject GaveOverPanel;
 
-    private void OnEnable()
+    void OnEnable()
     {
-        playerController.onPlayerDeath += DisplayGameOver;
+        PlayerController.OnPlayerDeath += DisplayGameOver;
     }
 
     private void OnDisable()
     {
-        playerController.onPlayerDeath -= DisplayGameOver;
+        PlayerController.OnPlayerDeath -= DisplayGameOver;
     }
 
     void DisplayGameOver()
     {
-        gameOverCanvas.gameObject.SetActive(true);
+            GaveOverPanel.gameObject.SetActive(true);
     }
 }

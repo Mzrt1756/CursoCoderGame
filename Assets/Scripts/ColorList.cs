@@ -16,16 +16,14 @@ public class ColorList : MonoBehaviour
         colorList.Add(Color.blue);
         colorList.Add(Color.green);
 
-
-
-        Debug.Log("There are " + colorList.Count + " colors in the list. \n");
-        Debug.Log("Los colores son: ");
+        //Debug.Log("There are " + colorList.Count + " colors in the list. \n");
+        //Debug.Log("Los colores son: ");
 
         for(int i =0; i<robbieList.Count; i++)
         {
             var robbieLight = robbieList[i].GetComponent<Light>();
             robbieLight.color = colorList[i];
-            Debug.Log(colorList[i]);
+            //Debug.Log(colorList[i]);
 
         }
 
