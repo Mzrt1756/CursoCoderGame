@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 8981583807916643493}
   - component: {fileID: 5798445581795486252}
   - component: {fileID: -2859389868130475583}
+  - component: {fileID: 4139726967398128410}
   m_Layer: 0
   m_Name: Robbie_Saw
   m_TagString: Untagged
@@ -132,6 +133,20 @@ MonoBehaviour:
   m_ShadowLayerMask: 1
   m_LightCookieSize: {x: 1, y: 1}
   m_LightCookieOffset: {x: 0, y: 0}
+--- !u!136 &4139726967398128410
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2956715975313624336}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 3.7533522
+  m_Height: 23.812733
+  m_Direction: 1
+  m_Center: {x: -0.13664055, y: 12.116865, z: 0}
 --- !u!1 &6090439426988176841
 GameObject:
   m_ObjectHideFlags: 0

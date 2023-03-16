@@ -11,6 +11,7 @@ public class RaycastAndSelectObjects : MonoBehaviour
     void OnEnable()
     {
         PlayerController.OnRaycastActive += CreateRaycast;
+        
     }
 
     private void OnDisable()
@@ -35,4 +36,6 @@ public class RaycastAndSelectObjects : MonoBehaviour
             Debug.Log("Hasn´t collided with anything");
         }
     }
+
+  
 }

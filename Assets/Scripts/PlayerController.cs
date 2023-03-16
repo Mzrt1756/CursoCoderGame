@@ -1,10 +1,12 @@
 using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class PlayerController : PlayableCharacter
 {
     [SerializeField] private MainCharacterData mainCharacterData;
+    [SerializeField] private Transform m_eyeView;
 
     //Movement
     private float currentSpeed;
@@ -34,6 +36,8 @@ public class PlayerController : PlayableCharacter
     public static event Action OnInventoryActive;
     public static event Action OnRaycastActive;
     public static event Action OnPauseActive;
+    public UnityEvent OnRaycastSelected;
+    
 
     private void Start()
     {
@@ -42,6 +46,10 @@ public class PlayerController : PlayableCharacter
         magicLightOrigin = new Vector3(3.65f,8.34f,11.13f);
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
+        if (OnRaycastSelected != null)
+        {
+            OnRaycastSelected.AddListener(ShootRaycast);
+        }
         Run();
     }
 
@@ -85,6 +93,12 @@ public class PlayerController : PlayableCharacter
                 if (OnRaycastActive != null)
                 {
                     OnRaycastActive?.Invoke();
+                }
+                break;
+            case "f":
+                if (OnRaycastSelected != null)
+                {
+                    OnRaycastSelected?.Invoke();
                 }
                 break;
             case "i":
@@ -204,24 +218,20 @@ public class PlayerController : PlayableCharacter
             }
         }
     }
-    
-    /*private void CreateRaycast()
+
+    void ShootRaycast()
     {
-        var l_hasCollided = Physics.Raycast(m_eyeView.position, m_eyeView.forward, out RaycastHit p_raycastHitInfo, mainCharacterData.m_raycastDistance, mainCharacterData.m_layerToCollideWith);
-        if (l_hasCollided)
-        {
-            Debug.Log($"collided with {p_raycastHitInfo.collider.name}");
-            var l_boxRigidbody = p_raycastHitInfo.rigidbody;
-            if (l_boxRigidbody != null)
+            var l_hasCollided = Physics.Raycast(m_eyeView.position, m_eyeView.forward, out RaycastHit p_raycastHitInfo, mainCharacterData.m_raycastDistance, mainCharacterData.m_layerToCollideWith);
+            if (l_hasCollided)
             {
-                l_boxRigidbody.AddExplosionForce(mainCharacterData.m_explosionForce, p_raycastHitInfo.point, mainCharacterData.m_explosionRadius);
+                Debug.Log($"collided with {p_raycastHitInfo.collider.name}");
             }
-        }
-        else
-        {
-            Debug.Log("Hasn´t collided with anything");
-        }
-    }*/
+            else
+            {
+                Debug.Log("Hasn´t collided with anything");
+            }
+    }
+
     public IEnumerator ReturnToNormal()
     {
         yield return new WaitForSeconds(5f);

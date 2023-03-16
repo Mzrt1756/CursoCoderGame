@@ -21,7 +21,7 @@ MonoBehaviour:
   whatIsGround:
     serializedVersion: 2
     m_Bits: 128
-  m_raycastDistance: 50
+  m_raycastDistance: 100
   m_explosionForce: 2000
   m_explosionRadius: 6
   m_layerToCollideWith:
